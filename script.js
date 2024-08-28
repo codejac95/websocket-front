@@ -56,7 +56,7 @@ const object = JSON.stringify({
         })
             .then(response => response.json())
             .then(data => {
-                alert(data+" är skapad")
+                alert(data.username+" är skapad")
                 
             })
         }
