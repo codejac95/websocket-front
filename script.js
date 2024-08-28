@@ -39,9 +39,24 @@ sendBtn.addEventListener("click", () => {
 })
 
 loginBtn.addEventListener("click", () => {
-    console.log("loggar in")
+    login();
 })
 
+const object = JSON.stringify({
+    "username": loginForm.value,
+    "password": "password"
+  });
+
 function login() {
-    
-}
+    fetch("https://dolphin-app-eqkxi.ondigitalocean.app/createUser",  {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        }, body: JSON.stringify(object)
+    })
+        .then(response => response.json())
+        .then(data => {
+            alert(data.username + " är skapad")
+            
+        })
+    }
