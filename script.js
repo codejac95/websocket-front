@@ -1,4 +1,4 @@
-const socket = new SockJS("http://localhost:8080/websocket");
+const socket = new SockJS("https://clownfish-app-af4ry.ondigitalocean.app/websocket");
 const messageList = document.getElementById("messageList")
 const sendText = document.getElementById("sendText")
 const sendBtn = document.getElementById("sendBtn")
