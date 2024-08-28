@@ -52,7 +52,7 @@ const object = JSON.stringify({
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
-            }, body: JSON.stringify(username,password)
+            }, body: JSON.stringify({username:loginForm.value,password:"password"})
         })
             .then(response => response.json())
             .then(data => {
