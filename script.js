@@ -52,11 +52,11 @@ const object = JSON.stringify({
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
-            }, body: JSON.stringify(object)
+            }, body: JSON.stringify(username,password)
         })
             .then(response => response.json())
             .then(data => {
-                alert(data[1].username + " är skapad")
+                alert(data+" är skapad")
                 
             })
         }
