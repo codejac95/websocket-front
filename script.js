@@ -48,11 +48,11 @@ const object = JSON.stringify({
   });
 
 function login() {
-    fetch("https://dolphin-app-eqkxi.ondigitalocean.app/createUser",  {
-        method: "POST",
+    fetch("https://dolphin-app-eqkxi.ondigitalocean.app/user",  {
+        method: "GET",
         headers: {
             "Content-Type": "application/json",
-        }, body: JSON.stringify(object)
+        } 
     })
         .then(response => response.json())
         .then(data => {
@@ -60,3 +60,17 @@ function login() {
             
         })
     }
+
+    // function login() {
+    //     fetch("https://dolphin-app-eqkxi.ondigitalocean.app/createUser",  {
+    //         method: "POST",
+    //         headers: {
+    //             "Content-Type": "application/json",
+    //         }, body: JSON.stringify(object)
+    //     })
+    //         .then(response => response.json())
+    //         .then(data => {
+    //             alert(data.username + " är skapad")
+                
+    //         })
+    //     }
