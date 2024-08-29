@@ -28,6 +28,7 @@ stompClient.connect({}, (frame) => {
         let li = document.createElement("li");
         li.innerText = JSON.parse(chat.body).chat;
         messageList.appendChild(li)
+        messageList.value="";
     })
 
     
