@@ -29,9 +29,7 @@ stompClient.connect({}, (frame) => {
         li.innerText = JSON.parse(chat.body).chat;
         messageList.appendChild(li)
        
-    })
-
-    
+    }) 
 })
 
 function sendHello(name) {
@@ -39,7 +37,7 @@ function sendHello(name) {
 }
 
 sendBtn.addEventListener("click", () => {
-    stompClient.send("/app/chat", {}, JSON.stringify({ "content": sendText.value }))
+    stompClient.send("/app/chat", {}, JSON.stringify({ "content": sendText.value, "user": localStorage.getItem("loggedInUser") }))
     sendText.value = "";
 })
 
