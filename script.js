@@ -50,34 +50,31 @@ loginUserBtn.addEventListener("click", () => {
     loginUser();
 })
 
-function loginUser() {
-    fetch("https://dolphin-app-eqkxi.ondigitalocean.app/loginUser", {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json",
-            "Access-Control-Allow-Origin": "*",
-        }, body: JSON.stringify({ username: loginUsernameForm.value, password: loginPasswordForm.value })
-    })
-
-        .then(response => response.json())
-
-
-
-        .then(data => {
-            console.log(data);
-            if (data.username === loginUsernameForm.value && data.password === loginPasswordForm.value)
-                alert(data.username + " har loggat in")
-            else alert("Fel uppgifter")
-
+async function loginUser() {
+    try {
+        //await fetch("http://localhost:8080/loginUser", {
+        await fetch("https://dolphin-app-eqkxi.ondigitalocean.app/loginUser", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "Access-Control-Allow-Origin": "*",
+            }, body: JSON.stringify({ username: loginUsernameForm.value, password: loginPasswordForm.value })
         })
+            .then(response => response.json())
+            .then(data => {
+                console.log(data);
+                alert("Götte!")
+            })
+    } catch {
+        alert("Dude! Kass")
+    }
 }
 
 function createUser() {
+    // fetch("http://localhost:8080/createUser", {
     fetch("https://dolphin-app-eqkxi.ondigitalocean.app/createUser", {
         method: "POST",
         headers: {
-
-
             "Content-Type": "application/json",
         }, body: JSON.stringify({ username: createUserNameForm.value, password: createPasswordForm.value })
     })
