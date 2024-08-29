@@ -1,4 +1,5 @@
 const socket = new SockJS("https://dolphin-app-eqkxi.ondigitalocean.app/websocket");
+// const socket = new SockJS("http://localhost:8080/websocket");
 const messageList = document.getElementById("messageList")
 const sendText = document.getElementById("sendText")
 const sendBtn = document.getElementById("sendBtn")
@@ -8,7 +9,6 @@ const createUserBtn = document.getElementById("createUserBtn")
 const loginUsernameForm = document.getElementById("loginUsernameForm")
 const loginPasswordForm = document.getElementById("loginPasswordForm")
 const loginUserBtn = document.getElementById("loginUserBtn")
-
 const stompClient = new Stomp.over(socket);
 
 stompClient.connect({}, (frame) => {
@@ -30,7 +30,7 @@ stompClient.connect({}, (frame) => {
         messageList.appendChild(li)
     })
 
-    sendHello("Jacob")
+    
 })
 
 function sendHello(name) {
@@ -52,7 +52,7 @@ loginUserBtn.addEventListener("click", () => {
 
 async function loginUser() {
     try {
-        //await fetch("http://localhost:8080/loginUser", {
+        // await fetch("http://localhost:8080/loginUser", {
         await fetch("https://dolphin-app-eqkxi.ondigitalocean.app/loginUser", {
             method: "POST",
             headers: {
@@ -64,6 +64,11 @@ async function loginUser() {
             .then(data => {
                 console.log(data);
                 alert("Götte!")
+                localStorage.removeItem("loggedInUser");
+                localStorage.setItem("loggedInUser", data.username)
+                loginUsernameForm.value=""
+                loginPasswordForm.value="";
+                sendHello(localStorage.getItem("loggedInUser"))
             })
     } catch {
         alert("Dude! Kass")
@@ -81,6 +86,8 @@ function createUser() {
         .then(response => response.json())
         .then(data => {
             alert(data.username + " är skapad")
+            createUserNameForm.value="";
+            createPasswordForm.value="";
 
         })
 }
