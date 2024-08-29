@@ -38,7 +38,7 @@ function sendHello(name) {
     stompClient.send("/app/hello", {}, JSON.stringify({ "name": name }))
 }
 
-sendBtn.addEventListener("submit", () => {
+sendBtn.addEventListener("click", () => {
     stompClient.send("/app/chat", {}, JSON.stringify({ "content": sendText.value }))
     sendText.value = "";
 })
