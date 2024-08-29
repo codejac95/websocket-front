@@ -40,7 +40,7 @@ function sendHello(name) {
 
 sendBtn.addEventListener("submit", () => {
     stompClient.send("/app/chat", {}, JSON.stringify({ "content": sendText.value }))
-    sendText.innerHTML = "";
+    sendText.value = "";
 })
 
 createUserBtn.addEventListener("click", () => {
