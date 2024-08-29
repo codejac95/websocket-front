@@ -19,7 +19,7 @@ stompClient.connect({}, (frame) => {
         let li = document.createElement("li");
         li.innerText = JSON.parse(greeting.body).content;
         messageList.appendChild(li)
-
+        sendText.value="";
     })
 
     stompClient.subscribe("/topic/chat", (chat) => {
@@ -28,7 +28,7 @@ stompClient.connect({}, (frame) => {
         let li = document.createElement("li");
         li.innerText = JSON.parse(chat.body).chat;
         messageList.appendChild(li)
-        messageList.value="";
+       
     })
 
     
