@@ -10,6 +10,7 @@ const loginUsernameForm = document.getElementById("loginUsernameForm")
 const loginPasswordForm = document.getElementById("loginPasswordForm")
 const loginUserBtn = document.getElementById("loginUserBtn")
 const stompClient = new Stomp.over(socket);
+const schoolRoomBtn = document.getElementById("schoolBtn")
 
 stompClient.connect({}, (frame) => {
     console.log("connected :)");
