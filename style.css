@@ -1,3 +1,27 @@
 body {
     background-color:beige;
 }
+
+#messageList li {
+    padding: 2px;
+    margin-bottom: 10px;
+    margin-left: 10px;
+    max-width: 60%;
+ 
+}
+
+.own-message {
+    padding: 2px;
+    margin-bottom: 10px;
+    margin-right: 30px; 
+    max-width: 60%;
+    color: blue;
+}
+
+.other-message {
+    padding: 2px;
+    margin-bottom: 10px;
+    margin-right: 30px; 
+    max-width: 60%;
+    color: rgb(255, 0, 0);
+}

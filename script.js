@@ -23,12 +23,15 @@ stompClient.connect({}, (frame) => {
     })
 
     stompClient.subscribe("/topic/chat", (chat) => {
-        console.log(JSON.parse(chat.body).chat)
-
+        let messageData = JSON.parse(chat.body)
         let li = document.createElement("li");
-        li.innerText = JSON.parse(chat.body).chat;
+        if(messageData.user===localStorage.getItem("loggedInUser") && messageData.user!==null) {
+            li.classList.add("own-message")
+        } else {
+            li.classList.add("other-message")
+        }
+        li.innerText = "("+messageData.user+ ") " + messageData.chat;
         messageList.appendChild(li)
-       
     }) 
 })
 
@@ -36,10 +39,17 @@ function sendHello(name) {
     stompClient.send("/app/hello", {}, JSON.stringify({ "name": name }))
 }
 
-sendBtn.addEventListener("click", () => {
-    stompClient.send("/app/chat", {}, JSON.stringify({ "content": sendText.value, "user": localStorage.getItem("loggedInUser") }))
+function sendMessage() {
+    stompClient.send("/app/chat", {}, JSON.stringify({ "content": sendText.value, "user": localStorage.getItem("loggedInUser") }));
     sendText.value = "";
-})
+}
+
+sendBtn.addEventListener("click", sendMessage);
+sendText.addEventListener("keydown", (event) => {
+    if (event.key === "Enter") {
+        sendMessage();
+    }
+});
 
 createUserBtn.addEventListener("click", () => {
     createUser();
