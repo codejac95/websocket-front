@@ -11,6 +11,9 @@ const loginPasswordForm = document.getElementById("loginPasswordForm")
 const loginUserBtn = document.getElementById("loginUserBtn")
 const stompClient = new Stomp.over(socket);
 const schoolRoomBtn = document.getElementById("schoolBtn")
+const familyMessageList = document.getElementById("familyMessageList")
+const familyBtn = document.getElementById("familyBtn")
+
 
 stompClient.connect({}, (frame) => {
     console.log("connected :)");
@@ -47,9 +50,8 @@ function sendMessage() {
 }
 
 async function saveMessage(sendText) {
-
-    await fetch("http://localhost:8080/createChatMessage", {
-        //await fetch("https://dolphin-app-eqkxi.ondigitalocean.app/createChatMessage", {
+    //await fetch("http://localhost:8080/createChatMessage", {
+    await fetch("https://dolphin-app-eqkxi.ondigitalocean.app/createChatMessage", {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
@@ -62,6 +64,12 @@ async function saveMessage(sendText) {
 
         })
 }
+
+
+familyBtn.addEventListener("click", () => {
+    localStorage.setItem("currentRoom", "family"), getRoomMessages(), window.location.href = "family.html"
+})
+
 
 sendBtn.addEventListener("click", sendMessage);
 sendText.addEventListener("keydown", (event) => {
@@ -117,5 +125,19 @@ function createUser() {
             createUserNameForm.value = "";
             createPasswordForm.value = "";
 
+        })
+}
+
+function getRoomMessages() {
+    //fetch("http://localhost:8080/getRoomMessages", {
+    fetch("https://dolphin-app-eqkxi.ondigitalocean.app/getRoomMessages", {
+        method: "GET",
+        headers: {
+            "Content-Type": "application/json",
+        }, body: localStorage.getItem("currentRoom")
+    })
+        .then(response => response.json())
+        .then(data => {
+            console.log(data);
         })
 }
