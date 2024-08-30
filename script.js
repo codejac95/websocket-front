@@ -19,20 +19,20 @@ stompClient.connect({}, (frame) => {
         let li = document.createElement("li");
         li.innerText = JSON.parse(greeting.body).content;
         messageList.appendChild(li)
-        sendText.value="";
+        sendText.value = "";
     })
 
     stompClient.subscribe("/topic/chat", (chat) => {
         let messageData = JSON.parse(chat.body)
         let li = document.createElement("li");
-        if(messageData.user===localStorage.getItem("loggedInUser") && messageData.user!==null) {
+        if (messageData.user === localStorage.getItem("loggedInUser") && messageData.user !== null) {
             li.classList.add("own-message")
         } else {
             li.classList.add("other-message")
         }
-        li.innerText = "("+messageData.user+ ") " + messageData.chat;
+        li.innerText = "(" + messageData.user + ") " + messageData.chat;
         messageList.appendChild(li)
-    }) 
+    })
 })
 
 function sendHello(name) {
@@ -41,7 +41,25 @@ function sendHello(name) {
 
 function sendMessage() {
     stompClient.send("/app/chat", {}, JSON.stringify({ "content": sendText.value, "user": localStorage.getItem("loggedInUser") }));
+    saveMessage(sendText.value)
     sendText.value = "";
+}
+
+async function saveMessage(sendText) {
+
+    await fetch("http://localhost:8080/createChatMessage", {
+        //await fetch("https://dolphin-app-eqkxi.ondigitalocean.app/createChatMessage", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+            "Access-Control-Allow.Origin": "*",
+        }, body: JSON.stringify({ user: localStorage.getItem("loggedInUser"), content: sendText })
+    })
+        .then(response => response.json())
+        .then(data => {
+            console.log(data);
+
+        })
 }
 
 sendBtn.addEventListener("click", sendMessage);
@@ -75,8 +93,8 @@ async function loginUser() {
                 alert("Götte!")
                 localStorage.removeItem("loggedInUser");
                 localStorage.setItem("loggedInUser", data.username)
-                loginUsernameForm.value=""
-                loginPasswordForm.value="";
+                loginUsernameForm.value = ""
+                loginPasswordForm.value = "";
                 sendHello(localStorage.getItem("loggedInUser"))
             })
     } catch {
@@ -95,8 +113,8 @@ function createUser() {
         .then(response => response.json())
         .then(data => {
             alert(data.username + " är skapad")
-            createUserNameForm.value="";
-            createPasswordForm.value="";
+            createUserNameForm.value = "";
+            createPasswordForm.value = "";
 
         })
 }
